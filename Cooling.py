@@ -174,21 +174,21 @@ def modelo(archivo, kr = 1) -> np.ndarray:
     r = datos[0][0:-kr]/100000                                             #km
     nr = len(r)
 
-    rho = datos[1][0:-kr]                                                   #(densidad) g/cm^3
-    nb = rho/(mn*1000)                                                      #(densidad de bariones)cm^(-3)
+    rho = datos[1][0:-kr]                                                   #(density) g/cm^3
+    nb = rho/(mn*1000)                                                      #(baryon density)cm^(-3)
 
-    ne = datos[2][0:-kr]*datos[1][0:-kr]/(mn*1000)                          #(densidad de electrones)cm^(-3)
+    ne = datos[2][0:-kr]*datos[1][0:-kr]/(mn*1000)                          #(electron density)cm^(-3)
     ye = ne/nb
 
-    nn = datos[6][0:-kr]*datos[1][0:-kr]/(mn*1000)                          #(densidad de neutrones)cm^(-3)
+    nn = datos[6][0:-kr]*datos[1][0:-kr]/(mn*1000)                          #(neutron density)cm^(-3)
     yn = nn/nb
 
-    Np = (np.ones(len(r))-datos[6][0:-kr])*datos[1][0:-kr]/(mn*1000)        #(densidad de protones)cm^(-3)
+    Np = (np.ones(len(r))-datos[6][0:-kr])*datos[1][0:-kr]/(mn*1000)        #(proton density)cm^(-3)
     yp = Np/nb
 
-    A =  datos[3][0:-kr]                                                    #número másico
-    Z =  datos[4][0:-kr]                                                    #número atómico
-    X =  datos[5][0:-kr]                                                    #fracción de átomos
+    A =  datos[3][0:-kr]                                                    #mass number
+    Z =  datos[4][0:-kr]                                                    #atomic number
+    X =  datos[5][0:-kr]                                                    #atomic fraction
  
     return r,rho,nb,ye,ne,nn,yn,Np,yp,A,Z,X
 
@@ -227,7 +227,7 @@ another to calculate the ratio between Coulomb energy and thermal energy.
 
 def Cv(T ,den = rho, YE=ye , AH = A , ZH = Z, XH = X, YN=yn,YP=yp) -> np.ndarray:         #erg*K^(-1)*cm^(-3)  
     '''
-    Esta función calcula el Calor espercífico en función de la temperatura
+    This function calculates the specific heat as a function of temperature
     '''
     cvv =  np.array([cvtot(T[i]*normT,den[i],YE[i],AH[i],ZH[i],XH[i],YN[i],YP[i])[0] for i in range(len(r))])
 
@@ -236,7 +236,7 @@ def Cv(T ,den = rho, YE=ye , AH = A , ZH = Z, XH = X, YN=yn,YP=yp) -> np.ndarray
     
 def K(T, r, NE = ne) -> np.ndarray:                            #erg*K^(-1)*s^(-1)*cm^(-1) 
     '''
-    Función que calcula la conductividad en función de la temperatura y la posición
+    Function that calculates conductivity as a function of temperature and position
     '''
 
     Kfe = (3*(np.pi**2)*ne)**(1/3)     #cm^(-1)
@@ -257,21 +257,21 @@ def emit(T,nbarion = nb, YE=ye , AH = A , ZH = Z, XH = X, YN=yn,YP=yp) -> np.nda
 
 def T0(r) -> np.ndarray:                                       #K
     '''
-    Función para la condición inicial en la temperatura
+    Function for the initial temperature condition
     '''
     return (np.ones(len(r))*(10**10))/normT
 
 
 def flujo(x,a,b) -> np.ndarray: 
     '''
-    Función auxiliar para el cálculo de las condiciones de contorno
+    Auxiliary function for calculating boundary conditions
     '''
     return a*x**b
 
 
 def gamma(T,r,rc,ZH = Z,rhog = rho,AH = A) -> np.ndarray: 
     '''
-    Funicón que calcula el cociente entre la energía de coulomb y la térmica
+    Function that calculates the ratio between Coulomb energy and thermal energy
     '''
     ZH = ZH[r > rc]
     AH = AH[r > rc]
@@ -291,13 +291,6 @@ time step to ensure the stability of the method and to speed up the simulation w
 
 def T_evo(x,dt_i,nt,ini): 
     '''
-    Se le pasa a la función el array con los diferentes radios de los que 
-    queremos calcular la temperatura, el primer paso de tiempo, el número de
-    pasos de tiempo y el array con las temperaturas de los puntos que le hemos 
-    pasado antes en el estado inicial. La función creará la matriz que representa
-    el enfriamiento de la estrella contando la conducción y la emisión de la
-    estrella de neutrones, calculando la temperatura en el instante siguiente.
-
     The function receives as parameters the array with the different radii of which we
     want to calculate the temperature, the first time step, the number of time steps and the
     array with the temperatures of the points that we have passed before in the initial state.
@@ -469,5 +462,4 @@ plt.ylabel('$\Gamma$')
 plt.legend()
 plt.semilogy()
 plt.show()
-
 
