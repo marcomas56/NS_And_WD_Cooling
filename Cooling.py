@@ -89,7 +89,7 @@ the given data about the stellar model and have the ones we want in the format w
 
 def animacion1D(F,x,t,k,titulo,guardar = g) -> None:
     '''
-    Función que hace una animación de una función F(t,x)
+    Function that makes an animation of a function F(t,x)
     '''
     Nt = len(t)
     dt = t[1]-t[0]
@@ -120,7 +120,7 @@ def animacion1D(F,x,t,k,titulo,guardar = g) -> None:
 
 def plot(x,y,titulo,xlab,ylab, ylog = False,xlog = False,label = False,style = False) -> None:
     '''
-    Hace una gráfica de y en función de x, con los parámetros que se necesiten
+    Function that makes a plot of y(x) with the given parameters
     '''
     plt.figure(titulo)
     plt.title(titulo)
@@ -145,7 +145,7 @@ def plot(x,y,titulo,xlab,ylab, ylog = False,xlog = False,label = False,style = F
 
 def leer(archivo) -> np.ndarray:
     '''
-    Lee los datos de un archivo por columnas
+    Read data from a file column by column. 
     '''
 
     datos = []
@@ -166,7 +166,7 @@ def leer(archivo) -> np.ndarray:
 
 def modelo(archivo, kr = 1) -> np.ndarray:
     '''
-    Función que nos devuelve los datos que queremos de nuestro modelo
+    Function that returns the data we want from our model
     '''
 
     datos = leer(archivo)
