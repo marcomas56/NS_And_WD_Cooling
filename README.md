@@ -1,4 +1,4 @@
-# Neutron Star and White Dwarf Cooling Simulation
+# Neutron Star and White Dwarf cooling simulation
 
 This project simulates the thermal evolution (cooling) of a Neutron Star or a White Dwarf over time. It solves the heat diffusion equation using the **Crank-Nicolson** numerical method.
 
